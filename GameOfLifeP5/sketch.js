@@ -1,3 +1,6 @@
+// Mathew McDermott
+// https://github.com/mcdermottm97/Cellular-Automata-Virtual-Ants.git
+
 function make2DArray(cols, rows) {
   let arr = new Array(cols);
   for (let i = 0; i < arr.length; i++){
