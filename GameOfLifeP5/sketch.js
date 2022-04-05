@@ -52,9 +52,9 @@ function draw() {
       let sum = 0;
       let neighbors = countNeighbors(grid, i, j)      
 
-      if (state == 0 && neighbors == 3) {
+      if (state == 0 && neighbors == 5) {
         next[i][j] = 1;
-      } else if (state == 1 && (neighbors < 2 || neighbors > 3)) {
+      } else if (state == 1 && (neighbors < 3 || neighbors > 7)) {
         next[i][j] = 0;
       } else {
         next[i][j] = state;
@@ -66,8 +66,8 @@ function draw() {
 
 function countNeighbors(grid, x, y) {
   let sum = 0;
-  for (let i = -1; i < 2; i++) {
-    for (let j = -1; j < 2; j++) {
+  for (let i = -2; i < 3; i++) {
+    for (let j = -2; j < 3; j++) {
       // wrap around 
       let col = (x + i + cols) % cols;
       let row = (y + j + rows) % rows;
