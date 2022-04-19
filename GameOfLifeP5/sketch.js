@@ -3,10 +3,15 @@
 
 
 // instantiate global variables for the grid and the ant
+let pause;
 let grid;
 let x;
 let y;
 let dir;
+
+// instantiate controller variables
+let button;
+let play = false;
 
 // set global variables for direction
 let up = 0;
@@ -17,6 +22,11 @@ let left = 3;
 // create canvas, create grid, and set initial ant position and direction
 function setup(){
   createCanvas(600,600);
+
+  button = createButton('Play/Pause')
+  button.position(1,600);
+  button.mousePressed(playButton)
+
   grid = make2DArray(width, height);
   x = width/2;
   y = height/2;
@@ -25,6 +35,10 @@ function setup(){
 
 // main draw funciton 
 function draw() {
+  if(!play){
+    return
+  }
+
   strokeWeight(1);
   // this loop processes multiple steps for each rendered frame.
   // essentially speed-multiplier at the cost of missed frames.
@@ -43,6 +57,7 @@ function draw() {
       stroke(color(0));
     }
     point(x, y);
+
     moveForward();
   }
 
@@ -104,4 +119,8 @@ function moveForward() {
     y = height - 1;
   }
 
+}
+
+function playButton() {
+  play = !play;
 }
