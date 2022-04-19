@@ -1,126 +1,84 @@
-// Matthew McDermott - 16032635
-// based off a CodingTrain challenge on Langtons ants
+let canvasWidth = screen.width * .8;
+let canvasHieght = screen.height * .8;
 
+let table;
+let ants;
 
-// instantiate global variables for the grid and the ant
-let pause;
-let grid;
-let x;
-let y;
-let dir;
+let slNumAnts;
+let slFastFwd;
+let slRes;
 
-// instantiate controller variables
-let button;
-let play = false;
+function setup() {
+  createCanvas(canvasWidth, canvasHieght);
 
-// set global variables for direction
-let up = 0;
-let right = 1;
-let down = 2;
-let left = 3;
+  slNumAnts = createSlider(1, 10, 1);
+  slNumAnts.changed(numAntsChanged);
+  slNumAnts.position(screen.width * .1, canvasHieght + 20);
+  
+  slFastFwd = createSlider(1, 100, 10);
+  slFastFwd.position(screen.width * .3, canvasHieght + 20);
 
-// create canvas, create grid, and set initial ant position and direction
-function setup(){
-  createCanvas(600,600);
+  slRes = createSlider(2, 200, 40); // divided by 10
+  slRes.position(screen.width * .5, canvasHieght + 20);
+  slRes.changed(resolutionChanged);
 
-  button = createButton('Play/Pause')
-  button.position(1,600);
-  button.mousePressed(playButton)
-
-  grid = make2DArray(width, height);
-  x = width/2;
-  y = height/2;
-  dir = up;
+  let resetButton = createButton('reset');
+  resetButton.position(screen.width * .7, canvasHieght + 20);
+  resetButton.mousePressed(resetapp);
+  resetapp();
 }
 
-// main draw funciton 
 function draw() {
-  if(!play){
-    return
-  }
+  background(220);
 
-  strokeWeight(1);
-  // this loop processes multiple steps for each rendered frame.
-  // essentially speed-multiplier at the cost of missed frames.
-  for (let n = 0; n < 100; n++) {
-    let state = grid[x][y];
-    if (state == 0) {
-      turnRight();
-      grid[x][y] = 1;
-    } else if (state == 1) {
-      turnLeft();
-      grid[x][y] = 0;
-    }
-
-    stroke(color(255));
-    if (grid[x][y] == 1) {
-      stroke(color(0));
-    }
-    point(x, y);
-
-    moveForward();
-  }
-
-}
-
-// function that returns a 2D array populated with 0 integers (white cells)
-function make2DArray(cols, rows) {
-  let arr = new Array(cols);
-  for (let i = 0; i < arr.length; i++){
-    arr[i] = new Array(rows);
-    for (let j = 0; j < arr[i].length; j++) {
-      arr[i][j] = 0;
+  for (let f = 0; f < slFastFwd.value(); f++) {
+    for (let i = 0; i < ants.length; i++) {
+      ants[i].update();
     }
   }
-  return arr;
-}
 
-// funciton to rotate ant +90 degrees
-function turnRight() {
-  dir++;
-  // using ascending integers for direction means wrapping back round requires selection
-  if (dir > left) {
-    dir = up
+  table.draw();
+
+  for (let i = 0; i < ants.length; i++) {
+    ants[i].draw();
   }
 }
 
-// funciton to rotate ant -90 degrees
-function turnLeft() {
-  dir --;
-  // using ascending integers for direction means wrapping back round requires selection
-  if(dir < up) {
-    dir = left;
+function resetapp() {
+  ants = [];
+  table = new Table(slRes.value()/10);
+
+  // first ant in center
+  let posx = floor(table.columns/2);
+  let posy = floor(table.rows/2);
+  let ant = new Ant(posx, posy);
+  ants.push(ant);
+
+  // any others random
+  for (let i = 1; i < slNumAnts.value(); i++) {
+    posx = floor(random(table.columns));
+    posy = floor(random(table.rows));
+    ant =  new Ant(posx, posy);
+    ants.push(ant);
   }
 }
 
-// function to move ant forward in its current direction
-function moveForward() {
-  if (dir == up) {
-    y--;
-  } else if (dir == right) {
-    x++;
-  } else if (dir == down) {
-    y++;
-  } else if (dir == left) {
-    x--;
+function numAntsChanged() {
+  let difference = slNumAnts.value() - ants.length;
+  if (difference > 0) {
+    for (let i = 0; i < difference; i++) {
+      let posx = floor(random(table.colums));
+      let posy = floor(random(table.rows));
+      let ant = new Ant(posx, posy);
+      ants.push(ant);
+    }
+  } else if (difference < 0) {
+    for (let i = 0; i > difference; i--) {
+      ants.pop();
+    }
   }
-
-  // controls wraparound on x axis
-  if (x > width - 1) {
-    x = 0;
-  } else if (x < 0) {
-    x = width - 1;
-  }
-
-  // controls wraparound on y axis
-  if (y > height -1) {
-    y = 0;
-  } else if (y < 0) { 
-    y = height - 1;
-  }
-
 }
 
-function playButton() {
-  play = !play;
+function resolutionChanged() {
+  table.changeResolution(slRes.value()/10);
 }
