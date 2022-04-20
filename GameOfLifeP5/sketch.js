@@ -1,73 +1,69 @@
 let canvasWidth = 1200;
-let canvasHieght = 900;
+let canvasHeight = 900;
 
-let table;
+let grid;
 let ants;
 
-let slNumAnts;
-let slFastFwd;
-let play = true;
+let speedSlider;
+let populationSlider;
+
+let pause = false;
 
 function setup() {
-  createCanvas(canvasWidth, canvasHieght);
-  
+  createCanvas(canvasWidth, canvasHeight);
 
-  slNumAnts = createSlider(1, 10, 1);
-  slNumAnts.position(700, canvasHieght + 20);
-  
-  slFastFwd = createSlider(1, 200, 10);
-  slFastFwd.position(500, canvasHieght + 20);
+  let pauseButton = createButton('pause / unpause');
+  pauseButton.position(30, canvasHeight + 20)
+  pauseButton.mousePressed(pauseUnpause);
 
-  let pauseButton = createButton('pause/play');
-  pauseButton.position(30, canvasHieght + 20)
-  pauseButton.mousePressed(playPause);
+  let resetButton = createButton('reset grid');
+  resetButton.position(185, canvasHeight + 20);
+  resetButton.mousePressed(reset);
 
-  let resetButton = createButton('reset');
-  resetButton.position(150, canvasHieght + 20);
-  resetButton.mousePressed(resetapp);
-  resetapp();
+  speedSlider = createSlider(1, 100, 10);
+  speedSlider.position(300, canvasHeight + 20);
 
+  populationSlider = createSlider(1, 10, 1);
+  populationSlider.position(475, canvasHeight + 20);
 
+  reset();
 }
 
 function draw() {
-  background(220);
+  background(220)
 
-  if (play) {
-    for (let f = 0; f < slFastFwd.value(); f++) {
+  if (!pause) {
+    for (let s = 0; s < speedSlider.value(); s++) {
       for (let i = 0; i < ants.length; i++) {
         ants[i].update();
       }
-    }
+    } 
   }
-  
-  table.draw();
 
-  for (let i = 0; i < ants.length; i++) {
+  grid.draw();
+
+  for (let i = 0; i< ants.length; i++) {
     ants[i].draw();
   }
-  
 }
 
-function playPause() {
-  play = !play;
+function pauseUnpause() {
+  pause = !pause;
 }
 
-function resetapp() {
+function reset() {
   ants = [];
-  table = new Table(1);
+  grid = new Grid(2);
 
-  // first ant in center
-  let posx = floor(table.columns/2);
-  let posy = floor(table.rows/2);
-  let ant = new Ant(posx, posy);
+  let x = floor(grid.cols/2);
+  let y = floor(grid.rows/2);
+  let ant = new Ant(x,y);
   ants.push(ant);
 
-  // any others random
-  for (let i = 1; i < slNumAnts.value(); i++) {
-    posx = floor(random(table.columns));
-    posy = floor(random(table.rows));
-    ant =  new Ant(posx, posy);
+  for (let i = 1; i < populationSlider.value(); i++) {
+    x = floor(random(grid.cols));
+    y = floor(random(grid.rows));
+    ant = new Ant(x,y);
     ants.push(ant);
   }
 }
