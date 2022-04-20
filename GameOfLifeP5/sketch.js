@@ -13,10 +13,9 @@ function setup() {
   
 
   slNumAnts = createSlider(1, 10, 1);
-
   slNumAnts.position(700, canvasHieght + 20);
   
-  slFastFwd = createSlider(1, 100, 10);
+  slFastFwd = createSlider(1, 200, 10);
   slFastFwd.position(500, canvasHieght + 20);
 
   let pauseButton = createButton('pause/play');
@@ -56,7 +55,7 @@ function playPause() {
 
 function resetapp() {
   ants = [];
-  table = new Table(2);
+  table = new Table(1);
 
   // first ant in center
   let posx = floor(table.columns/2);
@@ -70,21 +69,5 @@ function resetapp() {
     posy = floor(random(table.rows));
     ant =  new Ant(posx, posy);
     ants.push(ant);
-  }
-}
-
-function numAntsChanged() {
-  let difference = slNumAnts.value() - ants.length;
-  if (difference > 0) {
-    for (let i = 0; i < difference; i++) {
-      let posx = floor(random(table.colums));
-      let posy = floor(random(table.rows));
-      let ant = new Ant(posx, posy);
-      ants.push(ant);
-    }
-  } else if (difference < 0) {
-    for (let i = 0; i > difference; i--) {
-      ants.pop();
-    }
   }
 }
