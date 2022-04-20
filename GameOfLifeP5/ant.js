@@ -1,8 +1,8 @@
 class Ant {
-  constructor(initx, inity) {
-    this.x = initx;
-    this.y = inity;
-    this.dir = floor(random(4));
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.dir = 0;
   }
 
   draw() {

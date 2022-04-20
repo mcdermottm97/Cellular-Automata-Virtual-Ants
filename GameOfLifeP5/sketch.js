@@ -1,52 +1,62 @@
-let canvasWidth = screen.width * .8;
-let canvasHieght = screen.height * .8;
+let canvasWidth = 1200;
+let canvasHieght = 900;
 
 let table;
 let ants;
 
 let slNumAnts;
 let slFastFwd;
-let slRes;
+let play = true;
 
 function setup() {
   createCanvas(canvasWidth, canvasHieght);
+  
 
   slNumAnts = createSlider(1, 10, 1);
-  slNumAnts.changed(numAntsChanged);
-  slNumAnts.position(screen.width * .1, canvasHieght + 20);
+
+  slNumAnts.position(700, canvasHieght + 20);
   
   slFastFwd = createSlider(1, 100, 10);
-  slFastFwd.position(screen.width * .3, canvasHieght + 20);
+  slFastFwd.position(500, canvasHieght + 20);
 
-  slRes = createSlider(2, 200, 40); // divided by 10
-  slRes.position(screen.width * .5, canvasHieght + 20);
-  slRes.changed(resolutionChanged);
+  let pauseButton = createButton('pause/play');
+  pauseButton.position(30, canvasHieght + 20)
+  pauseButton.mousePressed(playPause);
 
   let resetButton = createButton('reset');
-  resetButton.position(screen.width * .7, canvasHieght + 20);
+  resetButton.position(150, canvasHieght + 20);
   resetButton.mousePressed(resetapp);
   resetapp();
+
+
 }
 
 function draw() {
   background(220);
 
-  for (let f = 0; f < slFastFwd.value(); f++) {
-    for (let i = 0; i < ants.length; i++) {
-      ants[i].update();
+  if (play) {
+    for (let f = 0; f < slFastFwd.value(); f++) {
+      for (let i = 0; i < ants.length; i++) {
+        ants[i].update();
+      }
     }
   }
-
+  
   table.draw();
 
   for (let i = 0; i < ants.length; i++) {
     ants[i].draw();
   }
+  
+}
+
+function playPause() {
+  play = !play;
 }
 
 function resetapp() {
   ants = [];
-  table = new Table(slRes.value()/10);
+  table = new Table(2);
 
   // first ant in center
   let posx = floor(table.columns/2);
@@ -77,8 +87,4 @@ function numAntsChanged() {
       ants.pop();
     }
   }
-}
-
-function resolutionChanged() {
-  table.changeResolution(slRes.value()/10);
 }
