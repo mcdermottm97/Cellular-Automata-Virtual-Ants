@@ -7,7 +7,7 @@ class WhiteAnt {
 
   draw() {
     noStroke();
-    fill('blue');
+    fill('red');
     rect(this.x * grid.res, this.y * grid.res, grid.res, grid.res);
   }
 
