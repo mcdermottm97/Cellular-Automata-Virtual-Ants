@@ -3,20 +3,23 @@ let canvasHeight = 900;
 
 let grid;
 let ants;
-
-let speedSlider;
-let populationSlider;
+let whiteAnts;
 
 let pause = false;
+
+let pauseButton;
+let resetButton;
+let speedSlider;
+let populationSlider;
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
 
-  let pauseButton = createButton('pause / unpause');
+  pauseButton = createButton('pause / unpause');
   pauseButton.position(30, canvasHeight + 20)
   pauseButton.mousePressed(pauseUnpause);
 
-  let resetButton = createButton('reset grid');
+  resetButton = createButton('reset grid');
   resetButton.position(185, canvasHeight + 20);
   resetButton.mousePressed(reset);
 
@@ -25,6 +28,8 @@ function setup() {
 
   populationSlider = createSlider(1, 10, 1);
   populationSlider.position(475, canvasHeight + 20);
+
+  
 
   reset();
 }
@@ -53,12 +58,19 @@ function pauseUnpause() {
 
 function reset() {
   ants = [];
-  grid = new Grid(2);
+  whiteAnts = [];
+  grid = new Grid(4);
 
   let x = floor(grid.cols/2);
-  let y = floor(grid.rows/2);
+  let y = floor(grid.rows/3*2);
   let ant = new Ant(x,y);
   ants.push(ant);
+
+  x = floor(grid.cols/2);
+  y = floor(grid.rows/3);
+  ant = new WhiteAnt(x,y);
+  whiteAnts.push(ant);
+
 
   for (let i = 1; i < populationSlider.value(); i++) {
     x = floor(random(grid.cols));
