@@ -41,6 +41,7 @@ function draw() {
     for (let s = 0; s < speedSlider.value(); s++) {
       for (let i = 0; i < ants.length; i++) {
         ants[i].update();
+        whiteAnts[i].update();
       }
     } 
   }
@@ -49,6 +50,7 @@ function draw() {
 
   for (let i = 0; i< ants.length; i++) {
     ants[i].draw();
+    whiteAnts[i].draw();
   }
 }
 
@@ -59,7 +61,7 @@ function pauseUnpause() {
 function reset() {
   ants = [];
   whiteAnts = [];
-  grid = new Grid(4);
+  grid = new Grid(1);
 
   let x = floor(grid.cols/2);
   let y = floor(grid.rows/3*2);

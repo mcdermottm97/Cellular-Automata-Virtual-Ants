@@ -13,9 +13,9 @@ class WhiteAnt {
 
   update() {
     if (grid.cellState(this.x, this.y)) {
-      this.turnL();
-    } else {
       this.turnR();
+    } else {
+      this.turnL();
     }
 
     grid.flipCellState(this.x, this.y);
