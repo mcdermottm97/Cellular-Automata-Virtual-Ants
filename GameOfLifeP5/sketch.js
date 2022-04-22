@@ -1,4 +1,4 @@
-let canvasWidth = 1200;
+let canvasWidth = 1400;
 let canvasHeight = 900;
 
 let grid;
@@ -10,9 +10,12 @@ let pause = false;
 let pauseButton;
 let resetButton;
 let speedSlider;
+let resSlider;
 let populationSlider;
 let redAntCheck;
 let redAntPopSlider;
+let xdistanceSlider;
+let ydistanceSlider;
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
@@ -25,18 +28,25 @@ function setup() {
   resetButton.position(185, canvasHeight + 20);
   resetButton.mousePressed(reset);
 
-  speedSlider = createSlider(1, 100, 10);
+  speedSlider = createSlider(1, 200, 10);
   speedSlider.position(300, canvasHeight + 20);
   
+  resSlider = createSlider(1, 10, 1);
+  resSlider.position(465, canvasHeight + 20);
 
   populationSlider = createSlider(1, 10, 1);
-  populationSlider.position(475, canvasHeight + 20);
+  populationSlider.position(625, canvasHeight + 20);
 
   redAntCheck = createCheckbox('opposite ants', false);
-  redAntCheck.position(650, canvasHeight + 20);
+  redAntCheck.position(775, canvasHeight + 20);
 
-  redAntPopSlider = createSlider(1, 10, 1)
-  redAntPopSlider.position(800, canvasHeight + 20);
+  redAntPopSlider = createSlider(1, 10, 1);
+  redAntPopSlider.position(900, canvasHeight + 30);
+
+  xdistanceSlider = createSlider(0, 20, 1);
+  xdistanceSlider.position(1050, canvasHeight + 20);
+  ydistanceSlider = createSlider(0, 20, 1);
+  ydistanceSlider.position(1050, canvasHeight + 40)
 
   reset();
 }
@@ -71,10 +81,10 @@ function pauseUnpause() {
 function reset() {
   ants = [];
   redAnts = [];
-  grid = new Grid(2);
+  grid = new Grid(resSlider.value());
 
   let x = floor(grid.cols/2);
-  let y = floor(grid.rows/3*2);
+  let y = floor(grid.rows/3);
   let ant = new Ant(x,y);
   ants.push(ant);
 
@@ -86,8 +96,8 @@ function reset() {
   }
   
   if (redAntCheck.checked()) {
-    x = floor(grid.cols/2);
-    y = floor(grid.rows/3);
+    x = floor(grid.cols/2 + xdistanceSlider.value());
+    y = floor(grid.rows/3 + ydistanceSlider.value());
     ant = new WhiteAnt(x,y);
     redAnts.push(ant); 
 
