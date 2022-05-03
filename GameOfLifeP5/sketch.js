@@ -17,6 +17,8 @@ let redAntPopSlider;
 let xdistanceSlider;
 let ydistanceSlider;
 
+let stepCount = 0;
+
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
 
@@ -53,8 +55,14 @@ function setup() {
 
 function draw() {
   background(220)
+  fill('black');
+  text(stepCount, 10, 30);
+
   if (!pause) {
+    
+
     for (let s = 0; s < speedSlider.value(); s++) {
+      stepCount++;
       for (let i = 0; i < ants.length; i++) {
         ants[i].update();
       }
@@ -72,6 +80,8 @@ function draw() {
   for (let i = 0; i < redAnts.length; i++) {
     redAnts[i].draw();
   }
+
+  
 }
 
 function pauseUnpause() {
@@ -79,6 +89,7 @@ function pauseUnpause() {
 }
 
 function reset() {
+  stepCount = 0;
   ants = [];
   redAnts = [];
   grid = new Grid(resSlider.value());

@@ -33,7 +33,10 @@ class Grid {
   }
 
   cellState(x,y) {
-    return this.cell[x][y];
+    if (typeof(this.cell[x][y]) === 'undefined'){
+      return false;
+    } 
+    return this.cell[x][y];    
   }
 
   flipCellState(x,y) {
