@@ -43,9 +43,9 @@ function setup() {
   redAntPopSlider = createSlider(1, 10, 1);
   redAntPopSlider.position(900, canvasHeight + 30);
 
-  xdistanceSlider = createSlider(0, 20, 1);
+  xdistanceSlider = createSlider(0, 50, 1);
   xdistanceSlider.position(1050, canvasHeight + 20);
-  ydistanceSlider = createSlider(0, 20, 1);
+  ydistanceSlider = createSlider(0, 50, 1);
   ydistanceSlider.position(1050, canvasHeight + 40)
 
   reset();
@@ -98,13 +98,13 @@ function reset() {
   if (redAntCheck.checked()) {
     x = floor(grid.cols/2 + xdistanceSlider.value());
     y = floor(grid.rows/3 + ydistanceSlider.value());
-    ant = new WhiteAnt(x,y);
+    ant = new RedAnt(x,y);
     redAnts.push(ant); 
 
     for (let i = 1; i < redAntPopSlider.value(); i++) {
       x = floor(random(grid.cols));
       y = floor(random(grid.rows));
-      ant = new WhiteAnt(x,y);
+      ant = new RedAnt(x,y);
       redAnts.push(ant);
     }
   }
