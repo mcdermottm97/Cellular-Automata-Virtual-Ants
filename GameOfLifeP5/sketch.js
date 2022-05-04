@@ -1,79 +1,123 @@
-// Mathew McDermott
-// https://github.com/mcdermottm97/Cellular-Automata-Virtual-Ants.git
-
-function make2DArray(cols, rows) {
-  let arr = new Array(cols);
-  for (let i = 0; i < arr.length; i++){
-    arr[i] = new Array(rows);
-  }
-  return arr;
-}
+let canvasWidth = 1400;
+let canvasHeight = 900;
 
 let grid;
-let cols;
-let rows;
-let res = 10;
+let ants;
+let redAnts;
 
+let pause = false;
+
+let pauseButton;
+let resetButton;
+let speedSlider;
+let resSlider;
+let populationSlider;
+let redAntCheck;
+let redAntPopSlider;
+let xdistanceSlider;
+let ydistanceSlider;
+
+let stepCount = 0;
 
 function setup() {
-  createCanvas(600, 600);
-  cols = width / res;
-  rows = height / res
-  grid = make2DArray(cols, rows);
+  createCanvas(canvasWidth, canvasHeight);
 
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      grid[i][j] = floor(random(2));
-    }
-  }
+  pauseButton = createButton('pause / unpause');
+  pauseButton.position(30, canvasHeight + 20)
+  pauseButton.mousePressed(pauseUnpause);
+
+  resetButton = createButton('reset grid');
+  resetButton.position(185, canvasHeight + 20);
+  resetButton.mousePressed(reset);
+
+  speedSlider = createSlider(1, 200, 10);
+  speedSlider.position(300, canvasHeight + 20);
+  
+  resSlider = createSlider(1, 10, 1);
+  resSlider.position(465, canvasHeight + 20);
+
+  populationSlider = createSlider(1, 10, 1);
+  populationSlider.position(625, canvasHeight + 20);
+
+  redAntCheck = createCheckbox('opposite ants', false);
+  redAntCheck.position(775, canvasHeight + 20);
+
+  redAntPopSlider = createSlider(1, 10, 1);
+  redAntPopSlider.position(900, canvasHeight + 30);
+
+  xdistanceSlider = createSlider(0, 50, 1);
+  xdistanceSlider.position(1050, canvasHeight + 20);
+  ydistanceSlider = createSlider(0, 50, 1);
+  ydistanceSlider.position(1050, canvasHeight + 40)
+
+  reset();
 }
-
 
 function draw() {
-  background(0);
+  background(220)
+  fill('black');
+  text(stepCount, 10, 30);
 
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      let x = i * res;
-      let y = j * res;
+  if (!pause) {
+    
 
-      if (grid[i][j] == 1){
-        fill(255);
-        rect(x, y, res, res);
+    for (let s = 0; s < speedSlider.value(); s++) {
+      stepCount++;
+      for (let i = 0; i < ants.length; i++) {
+        ants[i].update();
       }
-    }
+      for (let i = 0; i < redAnts.length; i++) {
+        redAnts[i].update();
+      }
+    } 
   }
 
-  let next = make2DArray(cols, rows);
+  grid.draw();
 
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      let state = grid[i][j]; 
-      let sum = 0;
-      let neighbors = countNeighbors(grid, i, j)      
-
-      if (state == 0 && neighbors == 3) {
-        next[i][j] = 1;
-      } else if (state == 1 && (neighbors < 2 || neighbors > 3)) {
-        next[i][j] = 0;
-      } else {
-        next[i][j] = state;
-      }
-    }
+  for (let i = 0; i< ants.length; i++) {
+    ants[i].draw();
   }
-  grid = next;
+  for (let i = 0; i < redAnts.length; i++) {
+    redAnts[i].draw();
+  }
+
+  
 }
 
-function countNeighbors(grid, x, y) {
-  let sum = 0;
-  for (let i = -1; i < 2; i++) {
-    for (let j = -1; j < 2; j++) {
-      // wrap around 
-      let col = (x + i + cols) % cols;
-      let row = (y + j + rows) % rows;
-      sum += grid[col][row];
+function pauseUnpause() {
+  pause = !pause;
+}
+
+function reset() {
+  stepCount = 0;
+  ants = [];
+  redAnts = [];
+  grid = new Grid(resSlider.value());
+
+  let x = floor(grid.cols/2);
+  let y = floor(grid.rows/3);
+  let ant = new Ant(x,y);
+  ants.push(ant);
+
+  for (let i = 1; i < populationSlider.value(); i++) {
+    x = floor(random(grid.cols));
+    y = floor(random(grid.rows));
+    ant = new Ant(x,y);
+    ants.push(ant);
+  }
+  
+  if (redAntCheck.checked()) {
+    x = floor(grid.cols/2 + xdistanceSlider.value());
+    y = floor(grid.rows/3 + ydistanceSlider.value());
+    ant = new RedAnt(x,y);
+    redAnts.push(ant); 
+
+    for (let i = 1; i < redAntPopSlider.value(); i++) {
+      x = floor(random(grid.cols));
+      y = floor(random(grid.rows));
+      ant = new RedAnt(x,y);
+      redAnts.push(ant);
     }
   }
-  sum -= grid[x][y];
-  return sum;
+  
 }
