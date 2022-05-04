@@ -4,7 +4,7 @@ class Grid {
     this.cell[0] = [];
     this.res = res;
     this.cols = width/res;
-    this.rows = height/res;
+    this.rows = (height-160)/res;
     this.fillCells(false);
   }
 
@@ -33,7 +33,7 @@ class Grid {
   }
 
   cellState(x,y) {
-    if (typeof(this.cell[x][y]) === 'undefined'){
+    if (typeof(this.cell[x][y]) == 'undefined'){
       return false;
     } 
     return this.cell[x][y];    

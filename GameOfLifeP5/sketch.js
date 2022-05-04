@@ -1,5 +1,5 @@
-let canvasWidth = 1400;
-let canvasHeight = 900;
+let canvasWidth = 750;
+let canvasHeight = 910;
 
 let grid;
 let ants;
@@ -22,41 +22,56 @@ let stepCount = 0;
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
 
-  pauseButton = createButton('pause / unpause');
-  pauseButton.position(30, canvasHeight + 20)
+  pauseButton = createButton('Pause / Play');
+  pauseButton.position(10, canvasHeight - 120)
   pauseButton.mousePressed(pauseUnpause);
 
-  resetButton = createButton('reset grid');
-  resetButton.position(185, canvasHeight + 20);
+  resetButton = createButton('Reset Grid');
+  resetButton.position(110, canvasHeight - 120);
   resetButton.mousePressed(reset);
 
   speedSlider = createSlider(1, 200, 10);
-  speedSlider.position(300, canvasHeight + 20);
+  speedSlider.position(210, canvasHeight - 110);
   
-  resSlider = createSlider(1, 10, 1);
-  resSlider.position(465, canvasHeight + 20);
+  resSlider = createSlider(1, 10, 2);
+  resSlider.position(350, canvasHeight - 110);
 
-  populationSlider = createSlider(1, 10, 1);
-  populationSlider.position(625, canvasHeight + 20);
-
-  redAntCheck = createCheckbox('opposite ants', false);
-  redAntCheck.position(775, canvasHeight + 20);
-
-  redAntPopSlider = createSlider(1, 10, 1);
-  redAntPopSlider.position(900, canvasHeight + 30);
+  redAntCheck = createCheckbox('Red Ants', false);
+  redAntCheck.position(490, canvasHeight - 120);  
 
   xdistanceSlider = createSlider(0, 50, 1);
-  xdistanceSlider.position(1050, canvasHeight + 20);
+  xdistanceSlider.position(595, canvasHeight -110);
   ydistanceSlider = createSlider(0, 50, 1);
-  ydistanceSlider.position(1050, canvasHeight + 40)
+  ydistanceSlider.position(595, canvasHeight - 90);
+
+  populationSlider = createSlider(1, 10, 1);
+  populationSlider.position(900, canvasHeight - 30);
+
+  redAntPopSlider = createSlider(1, 10, 1);
+  redAntPopSlider.position(1050, canvasHeight - 30);
+
+  
 
   reset();
 }
 
 function draw() {
   background(220)
+  noFill();
+  stroke(100);
+  rect(0, 0, canvasWidth-1, canvasHeight-1)
+  rect(0, canvasHeight - 160, canvasWidth, 0);
+  
+
   fill('black');
-  text(stepCount, 10, 30);
+  textSize(15);
+  text('Steps: ' + stepCount, 20, canvasHeight - 135);
+  text('Simulation Speed', 215, canvasHeight -115);
+  text('Canvas Scale', 370, canvasHeight - 115);
+  text('Red Ant Position', 600, canvasHeight - 115)
+  text('Extra Ants', 200, canvasHeight - 45)
+  text('Extra Red Ants', 1050, canvasHeight - 45)
+  
 
   if (!pause) {
     
