@@ -31,24 +31,24 @@ function setup() {
   resetButton.mousePressed(reset);
 
   speedSlider = createSlider(1, 200, 10);
-  speedSlider.position(210, canvasHeight - 110);
+  speedSlider.position(10, canvasHeight - 70);
   
   resSlider = createSlider(1, 10, 2);
-  resSlider.position(350, canvasHeight - 110);
+  resSlider.position(10, canvasHeight - 30);
 
   redAntCheck = createCheckbox('Red Ants', false);
-  redAntCheck.position(490, canvasHeight - 120);  
+  redAntCheck.position(215, canvasHeight - 120);  
 
   xdistanceSlider = createSlider(0, 50, 1);
-  xdistanceSlider.position(595, canvasHeight -110);
+  xdistanceSlider.position(235, canvasHeight -55);
   ydistanceSlider = createSlider(0, 50, 1);
-  ydistanceSlider.position(595, canvasHeight - 90);
+  ydistanceSlider.position(235, canvasHeight - 35);
 
   populationSlider = createSlider(1, 10, 1);
-  populationSlider.position(900, canvasHeight - 30);
+  populationSlider.position(440, canvasHeight - 70);
 
   redAntPopSlider = createSlider(1, 10, 1);
-  redAntPopSlider.position(1050, canvasHeight - 30);
+  redAntPopSlider.position(440, canvasHeight - 30);
 
   
 
@@ -65,12 +65,16 @@ function draw() {
 
   fill('black');
   textSize(15);
-  text('Steps: ' + stepCount, 20, canvasHeight - 135);
-  text('Simulation Speed', 215, canvasHeight -115);
-  text('Canvas Scale', 370, canvasHeight - 115);
-  text('Red Ant Position', 600, canvasHeight - 115)
-  text('Extra Ants', 200, canvasHeight - 45)
-  text('Extra Red Ants', 1050, canvasHeight - 45)
+  text('Steps: ' + stepCount, 10, canvasHeight - 135);
+  text('Simulation Speed', 10, canvasHeight -75);
+  text('Canvas Scale', 10, canvasHeight - 35);
+
+  text('Red Ant Position', 220, canvasHeight - 75)
+  text('X: ', 220, canvasHeight - 40)
+  text('Y: ', 220, canvasHeight - 20)
+
+  text('Extra Ants', 440, canvasHeight - 75)
+  text('Extra Red Ants', 440, canvasHeight - 35)
   
 
   if (!pause) {
