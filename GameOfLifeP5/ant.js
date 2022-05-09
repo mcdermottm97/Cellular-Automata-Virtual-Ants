@@ -1,13 +1,18 @@
 class Ant {
-  constructor(x,y) {
+  constructor(x,y, red) {
     this.x = x;
     this.y = y;
     this.dir = 0;
+    this.red = red;
   }
 
   draw() {
     noStroke();
-    fill('blue');
+    if (this.red == true) {
+      fill('red');
+    } else {
+      fill('blue');
+    }
     rect(this.x * grid.res, this.y * grid.res, grid.res, grid.res);
   }
 

@@ -130,7 +130,7 @@ function reset() {
 
   let x = floor(grid.cols/2);
   let y = floor(grid.rows/2);
-  let ant = new Ant(x,y);
+  let ant = new Ant(x,y,);
   ants.push(ant);
 
   for (let i = 1; i < populationSlider.value(); i++) {
