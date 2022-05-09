@@ -8,7 +8,7 @@ let grid;
 let ants;
 let redAnts;
 
-let pause = false;
+let pause = true;
 
 let pauseButton;
 let resetButton;
@@ -21,6 +21,9 @@ let xdistanceSlider;
 let ydistanceSlider;
 
 let stepCount = 0;
+
+let descr = 'This product was produced to answer the question "To what extent does interaction between virtual agents affect their ability to perform complex tasks?"';
+let instr1 = 'The first Ant will be placed in the center. Enabling Red Ants will place one ant with a mirrored ruleset, it\'s position relative to the center is controlled by the X and Y sliders (range is limited to allow precise control). Additional ants of both types can be added using the Extra sliders, these are placed randomly';
 
 
 
@@ -43,6 +46,7 @@ function setup() {
   
   scaleSlider = createSlider(1, 10, 2);
   scaleSlider.position(canvasX + 10, canvasY + 880);
+  scaleSlider.mouseOver
 
   redAntCheck = createCheckbox('Red Ants', false);
   redAntCheck.position(canvasX + 215, canvasY + 790);  
@@ -80,6 +84,13 @@ function draw() {
   text('Y: ', 220, canvasHeight - 25)
   text('Extra Ants', 440, canvasHeight - 75)
   text('Extra Red Ants', 440, canvasHeight - 35)
+
+  text(descr, 770, 60, 220, 500);
+  text('Instructions: ', 770, 190)
+  text(instr1, 770, 200, 220, 500);
+  fill('blue');
+  textSize(20);
+  text('Langton\'s Ant', 775, 35);
   
 
   if (!pause) {
@@ -111,6 +122,7 @@ function pauseUnpause() {
 }
 
 function reset() {
+  pause = true;
   stepCount = 0;
   ants = [];
   redAnts = [];
@@ -130,7 +142,7 @@ function reset() {
   
   if (redAntCheck.checked()) {
     x = floor(grid.cols/2 + xdistanceSlider.value());
-    y = floor(grid.rows/3 + ydistanceSlider.value());
+    y = floor(grid.rows/2 + ydistanceSlider.value());
     ant = new RedAnt(x,y);
     redAnts.push(ant); 
 

@@ -7,7 +7,7 @@ class Ant {
 
   draw() {
     noStroke();
-    fill('green');
+    fill('blue');
     rect(this.x * grid.res, this.y * grid.res, grid.res, grid.res);
   }
 
