@@ -3,7 +3,7 @@ class Grid {
     this.cell = [];
     this.cell[0] = [];
     this.res = res;
-    this.cols = width/res;
+    this.cols = (width-260)/res;
     this.rows = (height-160)/res;
     this.fillCells(false);
   }

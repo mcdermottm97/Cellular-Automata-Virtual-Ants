@@ -1,5 +1,5 @@
 let cnv;
-let canvasWidth = 750;
+let canvasWidth = 1010;
 let canvasHeight = 910;
 let canvasX;
 let canvasY;
@@ -62,30 +62,27 @@ function setup() {
 }
 
 function draw() {
+
   background(220)
   noFill();
   stroke(100);
   rect(0, 0, canvasWidth-1, canvasHeight-1)
-  rect(0, canvasHeight - 160, canvasWidth, 0);
-  
+  rect(0, canvasHeight - 160, canvasWidth - 260, 0);
+  rect(canvasWidth - 260, 0, 0, canvasHeight);
 
   fill('black');
   textSize(15);
   text('Steps: ' + stepCount, 10, canvasHeight - 135);
   text('Simulation Speed', 10, canvasHeight -75);
   text('Canvas Scale', 10, canvasHeight - 35);
-
   text('Red Ant Position', 220, canvasHeight - 75)
   text('X: ', 220, canvasHeight - 50)
   text('Y: ', 220, canvasHeight - 25)
-
   text('Extra Ants', 440, canvasHeight - 75)
   text('Extra Red Ants', 440, canvasHeight - 35)
   
 
   if (!pause) {
-    
-
     for (let s = 0; s < speedSlider.value(); s++) {
       stepCount++;
       for (let i = 0; i < ants.length; i++) {
