@@ -19,11 +19,12 @@ let redAntCheck;
 let redAntPopSlider;
 let xdistanceSlider;
 let ydistanceSlider;
+let neighborSlider;
 
 let stepCount = 0;
 
 let descr = 'This product was produced to answer the question "To what extent does interaction between virtual agents affect their ability to perform complex tasks?"';
-let instr1 = 'The first Ant will be placed in the center. Enabling Red Ants will place one ant with a mirrored ruleset, it\'s position relative to the center is controlled by the X and Y sliders (range is limited to allow precise control). Additional ants of both types can be added using the Extra sliders, these are placed randomly';
+let instr1 = 'The first Ant will be placed in the center. Enabling Red Ants will place one ant with a mirrored ruleset, its position relative to the center is controlled by the X and Y sliders (range is limited to allow precise control). Additional ants of both types can be added using the Extra sliders, these ants are placed randomly';
 
 
 
@@ -57,10 +58,16 @@ function setup() {
   ydistanceSlider.position(canvasX + 235, canvasY + 870);
 
   populationSlider = createSlider(1, 10, 1);
-  populationSlider.position(canvasX + 440, canvasY + 840);
+  populationSlider.position(canvasX + 410, canvasY + 840);
 
   redAntPopSlider = createSlider(1, 10, 1);
-  redAntPopSlider.position(canvasX + 440, canvasY + 880);
+  redAntPopSlider.position(canvasX + 410, canvasY + 880);
+
+  neighborSlider = createSlider(1, 9, 1, 4);
+  neighborSlider.position(canvasX + 570, canvasY + 860);
+
+
+
 
   reset();
 }
@@ -80,10 +87,12 @@ function draw() {
   text('Simulation Speed', 10, canvasHeight -75);
   text('Canvas Scale', 10, canvasHeight - 35);
   text('Red Ant Position', 220, canvasHeight - 75)
-  text('X: ', 220, canvasHeight - 50)
-  text('Y: ', 220, canvasHeight - 25)
-  text('Extra Ants', 440, canvasHeight - 75)
-  text('Extra Red Ants', 440, canvasHeight - 35)
+  text('X: ', 220, canvasHeight - 50);
+  text('Y: ', 220, canvasHeight - 25);
+  text('Extra Ants', 410, canvasHeight - 75);
+  text('Extra Red Ants', 410, canvasHeight - 35);
+  text('1           5            9', 575, canvasHeight - 15);
+  text('Neighborhood Size', 570, canvasHeight - 55)
 
   text(descr, 770, 60, 220, 500);
   text('Instructions: ', 770, 190)
@@ -130,26 +139,26 @@ function reset() {
 
   let x = floor(grid.cols/2);
   let y = floor(grid.rows/2);
-  let ant = new Ant(x,y);
+  let ant = new Ant(x,y,neighborSlider.value());
   ants.push(ant);
 
   for (let i = 1; i < populationSlider.value(); i++) {
     x = floor(random(grid.cols));
     y = floor(random(grid.rows));
-    ant = new Ant(x,y);
+    ant = new Ant(x,y,neighborSlider.value());
     ants.push(ant);
   }
   
   if (redAntCheck.checked()) {
     x = floor(grid.cols/2 + xdistanceSlider.value());
     y = floor(grid.rows/2 + ydistanceSlider.value());
-    ant = new RedAnt(x,y);
+    ant = new RedAnt(x,y,neighborSlider.value());
     redAnts.push(ant); 
 
     for (let i = 1; i < redAntPopSlider.value(); i++) {
       x = floor(random(grid.cols));
       y = floor(random(grid.rows));
-      ant = new RedAnt(x,y);
+      ant = new RedAnt(x,y,neighborSlider.value());
       redAnts.push(ant);
     }
   }

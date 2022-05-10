@@ -33,6 +33,7 @@ class Grid {
   }
 
   cellState(x,y) {
+    console.log(x,y);
     if (typeof(this.cell[x][y]) == 'undefined'){
       return false;
     } 
