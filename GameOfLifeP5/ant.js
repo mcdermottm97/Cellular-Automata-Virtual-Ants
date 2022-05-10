@@ -16,7 +16,6 @@ class Ant {
     
     this.checkNeighborhood();
     grid.flipCellState(this.x, this.y);
-    this.checkEdges();
   }
 
   turnR() {
@@ -79,10 +78,12 @@ class Ant {
     if (this.neighborhood == 1){
       if (grid.cellState(this.x, this.y)) {
         this.turnL();
+        this.checkEdges();
         this.moveForward();
         return;
       } else {
         this.turnR();
+        this.checkEdges();
         this.moveForward();
         return;
       }
@@ -93,7 +94,7 @@ class Ant {
       sum += grid.cellState(x, y+1);
       sum += grid.cellState(x-1, y);
       sum += grid.cellState(x+1, y);
-      if (sum > 2) {
+      if (sum > 1) {
         this.turnL();
         this.moveForward();
       } else {
