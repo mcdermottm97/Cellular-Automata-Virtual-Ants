@@ -44,6 +44,7 @@ class Grid {
     } else if (y < 0) {
       y = this.rows - 1;
     }
+
     if (this.cell[x][y] === undefined){
       return false;
     } 
