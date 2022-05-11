@@ -39,7 +39,7 @@ class Grid {
       x = this.cols - 1;
     }
 
-    if (y > this.rows) {
+    if (y >= this.rows) {
       y = 0
     } else if (y < 0) {
       y = this.rows - 1;
