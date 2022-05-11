@@ -45,7 +45,7 @@ function setup() {
   speedSlider = createSlider(1, 200, 10);
   speedSlider.position(canvasX + 10, canvasY + 840);
   
-  scaleSlider = createSlider(1, 10, 2);
+  scaleSlider = createSlider(1, 6, 2);
   scaleSlider.position(canvasX + 10, canvasY + 880);
   scaleSlider.mouseOver
 

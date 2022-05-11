@@ -33,7 +33,18 @@ class Grid {
   }
 
   cellState(x,y) {
-    if (typeof(this.cell[x][y]) == 'undefined'){
+    if (x >= this.cols) {
+      x = 0
+    } else if (x < 0) {
+      x = this.cols - 1;
+    }
+
+    if (y > this.rows) {
+      y = 0
+    } else if (y < 0) {
+      y = this.rows - 1;
+    }
+    if (this.cell[x][y] === undefined){
       return false;
     } 
     return this.cell[x][y];    

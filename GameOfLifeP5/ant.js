@@ -13,9 +13,15 @@ class Ant {
   }
 
   update() {
-    
-    this.checkNeighborhood();
+    if(this.checkNeighborhood()){
+      this.turnL();
+    } else {
+      this.turnR();
+    }
+
     grid.flipCellState(this.x, this.y);
+    this.moveForward();
+    this.checkEdges();
   }
 
   turnR() {
@@ -57,16 +63,16 @@ class Ant {
   }
 
   checkEdges() {
-    if (this.x >= grid.cols) {
+    if (this.x >= grid.rows) {
       this.x = 0;
     } else if (this.x < 0) {
-      this.x = grid.cols - 1;
+      this.x = round(grid.rows - 1);
     }
 
-    if (this.y >= grid.rows) {
+    if (this.y >= grid.cols) {
       this.y = 0;
     } else if (this.y < 0) {
-      this.y = grid.rows - 1;
+      this.y = round(grid.cols - 1);
     }
   }
 
@@ -77,15 +83,9 @@ class Ant {
 
     if (this.neighborhood == 1){
       if (grid.cellState(this.x, this.y)) {
-        this.turnL();
-        this.checkEdges();
-        this.moveForward();
-        return;
+        return true;
       } else {
-        this.turnR();
-        this.checkEdges();
-        this.moveForward();
-        return;
+        return false;
       }
 
     } else if (this.neighborhood == 5) {
@@ -95,13 +95,10 @@ class Ant {
       sum += grid.cellState(x-1, y);
       sum += grid.cellState(x+1, y);
       if (sum > 1) {
-        this.turnL();
-        this.moveForward();
+        return true;
       } else {
-        this.turnR();
-        this.moveForward();
+        return false;
       }
-      return;
 
     } else {
       for (let i = -1; i < 2; i++) {
@@ -109,16 +106,13 @@ class Ant {
           sum += grid.cellState(x + i, y + j);
         }
       }
-      if (sum < 3) {
-        this.turnL();
-        this.moveForward();
+      if (sum < 4) {
+        return true;
       } else {
-        this.turnR();
-        this.moveForward();
+        
+        return false;
       }
-      return;
     }
-
-    
   }
+
 }
