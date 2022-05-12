@@ -20,7 +20,7 @@ class RedAnt {
     }
 
     grid.flipCellState(this.x, this.y);
-    this.moveForward();
+    this.moveBackward();
     this.checkEdges();
   }
 
@@ -92,6 +92,7 @@ class RedAnt {
       sum += grid.cellState(x, y);
       sum += grid.cellState(x, y-1);
       sum += grid.cellState(x, y+1);
+      console.log(x-1,y);
       sum += grid.cellState(x-1, y);
       sum += grid.cellState(x+1, y);
       if (sum > 1) {

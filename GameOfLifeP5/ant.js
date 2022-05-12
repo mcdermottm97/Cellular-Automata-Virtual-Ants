@@ -108,8 +108,7 @@ class Ant {
       }
       if (sum < 4) {
         return true;
-      } else {
-        
+      }else {
         return false;
       }
     }

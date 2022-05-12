@@ -23,9 +23,9 @@ let neighborSlider;
 
 let stepCount = 0;
 
-let descr = 'This product was produced to answer the question "To what extent does interaction between virtual agents affect their ability to perform complex tasks?"';
-let instr1 = 'The first Ant will be placed in the center. Enabling Red Ants will place one ant with a mirrored ruleset, its position relative to the center is controlled by the X and Y sliders (range is limited to allow precise control). Additional ants of both types can be added using the Extra sliders, these ants are placed randomly';
-
+let descr = 'This product was produced to answer the question "To what extent does interaction between virtual agents affect their ability to perform complex tasks?" in the context of self-organization. This open-source web application allows easy experimentation with a variety of adjustable variables.';
+let instr1 = 'The first Ant will be placed in the centre and will follow the original Langton\'s ant ruleset. A Red Ant follows the same rules but in reverse, moving backwards and turning the opposite direction. If Red Ants are enabled then the initial position, relative to the centre, is controlled by the X and Y sliders (this range is limited to allow precise control). Additional ants of both types can be added using the Extra sliders, this function is experimental and Ants are currently placed randomly.';
+let instr2 = 'The Neighbourhood Size slider adjusts how many surrounding cells an agent uses to determine its behaviour. Observe how increasing the neighbourhood affects the resulatant pattern. Neighbourhood size is this product\'s primary method of adjusting the level of interaction between Virtual Agents.';
 
 
 function setup() {
@@ -94,12 +94,14 @@ function draw() {
   text('1           5            9', 575, canvasHeight - 15);
   text('Neighborhood Size', 570, canvasHeight - 55)
 
-  text(descr, 770, 60, 220, 500);
-  text('Instructions: ', 770, 190)
-  text(instr1, 770, 200, 220, 500);
+  text('Description: ', 770, 80);
+  text(descr, 770, 90, 220, 500);
+  text('Instructions: ', 770, 315)
+  text(instr1, 770, 325, 220, 500);
+  text(instr2, 770, 650, 220, 500);
   fill('blue');
-  textSize(20);
-  text('Langton\'s Ant', 775, 35);
+  textSize(25);
+  text('Langton\'s Ant', 770, 40);
   
 
   if (!pause) {
