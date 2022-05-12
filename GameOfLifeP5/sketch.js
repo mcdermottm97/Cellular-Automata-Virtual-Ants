@@ -1,16 +1,23 @@
+/*
+  Author: Matthew McDermott - 16032635
+  Last updated: 12/05/2022
+*/
+
+// Global access to canvas variables
 let cnv;
 let canvasWidth = 1010;
 let canvasHeight = 910;
 let canvasX;
 let canvasY;
 
+// Global access to class variables
 let grid;
 let ants;
 let redAnts;
 
-let pause = true;
-
+// Global access to UI elements
 let pauseButton;
+let pause = true;
 let resetButton;
 let speedSlider;
 let scaleSlider;
@@ -20,15 +27,14 @@ let redAntPopSlider;
 let xdistanceSlider;
 let ydistanceSlider;
 let neighborSlider;
-
 let stepCount = 0;
-
 let descr = 'This product was produced to answer the question "To what extent does interaction between virtual agents affect their ability to perform complex tasks?" in the context of self-organization. This open-source web application allows easy experimentation with a variety of adjustable variables.';
 let instr1 = 'The first Ant will be placed in the centre and will follow the original Langton\'s ant ruleset. A Red Ant follows the same rules but in reverse, moving backwards and turning the opposite direction. If Red Ants are enabled then the initial position, relative to the centre, is controlled by the X and Y sliders (this range is limited to allow precise control). Additional ants of both types can be added using the Extra sliders, this function is experimental and Ants are currently placed randomly.';
 let instr2 = 'The Neighbourhood Size slider adjusts how many surrounding cells an agent uses to determine its behaviour. Observe how increasing the neighbourhood affects the resulatant pattern. Neighbourhood size is this product\'s primary method of adjusting the level of interaction between Virtual Agents.';
 
 
 function setup() {
+  // create canvas all interactive UI elements
   cnv = createCanvas(canvasWidth, canvasHeight);
   canvasX = (windowWidth - width) / 2;
   canvasY = (windowHeight - height) /2;
@@ -66,21 +72,18 @@ function setup() {
   neighborSlider = createSlider(1, 9, 1, 4);
   neighborSlider.position(canvasX + 570, canvasY + 860);
 
-
-
-
+  // some setup in the reset funciton to avoid duplication
   reset();
 }
 
 function draw() {
-
+  // draw non-interactive UI elements and UI labels
   background(220)
   noFill();
   stroke(100);
   rect(0, 0, canvasWidth-1, canvasHeight-1)
   rect(0, canvasHeight - 160, canvasWidth - 260, 0);
   rect(canvasWidth - 260, 0, 0, canvasHeight);
-
   fill('black');
   textSize(15);
   text('Steps: ' + stepCount, 10, canvasHeight - 135);
@@ -94,6 +97,7 @@ function draw() {
   text('1           5            9', 575, canvasHeight - 15);
   text('Neighborhood Size', 570, canvasHeight - 55)
 
+  // draw description and user instructions
   text('Description: ', 770, 80);
   text(descr, 770, 90, 220, 500);
   text('Instructions: ', 770, 315)
@@ -103,7 +107,7 @@ function draw() {
   textSize(25);
   text('Langton\'s Ant', 770, 40);
   
-
+  // loop through ants and call their update functions
   if (!pause) {
     for (let s = 0; s < speedSlider.value(); s++) {
       stepCount++;
@@ -116,8 +120,8 @@ function draw() {
     } 
   }
 
+  // call draw function for grid and ants
   grid.draw();
-
   for (let i = 0; i< ants.length; i++) {
     ants[i].draw();
   }
@@ -133,17 +137,20 @@ function pauseUnpause() {
 }
 
 function reset() {
+  // set/reset the grid, the ant arrays, and some UI elements
   pause = true;
   stepCount = 0;
   ants = [];
   redAnts = [];
   grid = new Grid(scaleSlider.value());
 
+  // create and place initial ant in centre, add ant to array
   let x = floor(grid.cols/2);
   let y = floor(grid.rows/2);
   let ant = new Ant(x,y,neighborSlider.value());
   ants.push(ant);
 
+  // create any extra ants and place randomly, add them to ant array
   for (let i = 1; i < populationSlider.value(); i++) {
     x = floor(random(grid.cols));
     y = floor(random(grid.rows));
@@ -151,6 +158,7 @@ function reset() {
     ants.push(ant);
   }
   
+  // if red ants are enabled then do the same for them
   if (redAntCheck.checked()) {
     x = floor(grid.cols/2 + xdistanceSlider.value());
     y = floor(grid.rows/2 + ydistanceSlider.value());
