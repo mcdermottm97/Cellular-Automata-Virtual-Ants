@@ -26,6 +26,7 @@ let redAntCheck;
 let redAntPopSlider;
 let xdistanceSlider;
 let ydistanceSlider;
+let ydistanceVal;
 let neighborSlider;
 let stepCount = 0;
 let descr = 'This product was produced to answer the question "To what extent does interaction between virtual agents affect their ability to perform complex tasks?" in the context of self-organization. This open-source web application allows easy experimentation with a variety of adjustable variables.';
@@ -51,7 +52,7 @@ function setup() {
   speedSlider = createSlider(1, 200, 10);
   speedSlider.position(canvasX + 10, canvasY + 840);
   
-  scaleSlider = createSlider(1, 6, 2);
+  scaleSlider = createSlider(1, 6, 1);
   scaleSlider.position(canvasX + 10, canvasY + 880);
   scaleSlider.mouseOver
 
@@ -60,7 +61,7 @@ function setup() {
 
   xdistanceSlider = createSlider(0, 50, 1);
   xdistanceSlider.position(canvasX + 235, canvasY + 845);
-  ydistanceSlider = createSlider(0, 50, 1);
+  ydistanceSlider = createSlider(0, 50, 0);
   ydistanceSlider.position(canvasX + 235, canvasY + 870);
 
   populationSlider = createSlider(1, 10, 1);
@@ -77,6 +78,9 @@ function setup() {
 }
 
 function draw() {
+  let xdistanceVal = xdistanceSlider.value()
+  let ydistanceVal = ydistanceSlider.value()
+
   // draw non-interactive UI elements and UI labels
   background(220)
   noFill();
@@ -88,10 +92,10 @@ function draw() {
   textSize(15);
   text('Steps: ' + stepCount, 10, canvasHeight - 135);
   text('Simulation Speed', 10, canvasHeight -75);
-  text('Canvas Scale', 10, canvasHeight - 35);
+  text('Scale: ' + grid.rows + 'x' + grid.cols, 10, canvasHeight - 35);
   text('Red Ant Position', 220, canvasHeight - 75)
-  text('X: ', 220, canvasHeight - 50);
-  text('Y: ', 220, canvasHeight - 25);
+  text('X: ' + xdistanceVal, 200, canvasHeight - 50);
+  text('Y: ' + ydistanceVal, 200, canvasHeight - 25);
   text('Extra Ants', 410, canvasHeight - 75);
   text('Extra Red Ants', 410, canvasHeight - 35);
   text('1           5            9', 575, canvasHeight - 15);
@@ -107,6 +111,10 @@ function draw() {
   textSize(25);
   text('Langton\'s Ant', 770, 40);
   
+  if (stepCount >= 100000) {
+    pause = true;
+  }
+
   // loop through ants and call their update functions
   if (!pause) {
     for (let s = 0; s < speedSlider.value(); s++) {
