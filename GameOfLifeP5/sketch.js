@@ -54,7 +54,6 @@ function setup() {
   
   scaleSlider = createSlider(1, 6, 1);
   scaleSlider.position(canvasX + 10, canvasY + 880);
-  scaleSlider.mouseOver
 
   redAntCheck = createCheckbox('Red Ants', false);
   redAntCheck.position(canvasX + 215, canvasY + 790);  
