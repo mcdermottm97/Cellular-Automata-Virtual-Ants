@@ -1,6 +1,6 @@
 /*
   Author: Matthew McDermott - 16032635
-  Last updated: 12/05/2022
+  Last updated: 16/05/2022
 */
 
 // Global access to canvas variables
@@ -31,7 +31,7 @@ let neighborSlider;
 let stepCount = 0;
 let descr = 'This product was produced to answer the question "To what extent does interaction between virtual agents affect their ability to perform complex tasks?" in the context of self-organization. This open-source web application allows easy experimentation with a variety of adjustable variables.';
 let instr1 = 'The first Ant will be placed in the centre and will follow the original Langton\'s ant ruleset. A Red Ant follows the same rules but in reverse, moving backwards and turning the opposite direction. If Red Ants are enabled then the initial position, relative to the centre, is controlled by the X and Y sliders (this range is limited to allow precise control). Additional ants of both types can be added using the Extra sliders, this function is experimental and Ants are currently placed randomly.';
-let instr2 = 'The Neighbourhood Size slider adjusts how many surrounding cells an agent uses to determine its behaviour. Observe how increasing the neighbourhood affects the resulatant pattern. Neighbourhood size is this product\'s primary method of adjusting the level of interaction between Virtual Agents.';
+let instr2 = 'The Neighbourhood Size slider adjusts how many surrounding cells an agent uses to determine its behaviour. Observe how increasing the neighbourhood affects the resulatant pattern. Neighbourhood size is this product\'s primary method of adjusting the level of interaction between Virtual Agents. All changes to settings require the grid to be reset.';
 
 
 function setup() {
@@ -52,7 +52,7 @@ function setup() {
   speedSlider = createSlider(1, 200, 10);
   speedSlider.position(canvasX + 10, canvasY + 840);
   
-  scaleSlider = createSlider(1, 6, 1);
+  scaleSlider = createSlider(1, 3, 1);
   scaleSlider.position(canvasX + 10, canvasY + 880);
 
   redAntCheck = createCheckbox('Red Ants', false);
@@ -108,7 +108,7 @@ function draw() {
   text(instr2, 770, 650, 220, 500);
   fill('blue');
   textSize(25);
-  text('Langton\'s Ant', 770, 40);
+  text('Virtual Ants', 770, 40);
 
   // loop through ants and call their update functions
   if (!pause) {
