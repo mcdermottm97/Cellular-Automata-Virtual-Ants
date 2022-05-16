@@ -109,10 +109,6 @@ function draw() {
   fill('blue');
   textSize(25);
   text('Langton\'s Ant', 770, 40);
-  
-  if (stepCount >= 100000) {
-    pause = true;
-  }
 
   // loop through ants and call their update functions
   if (!pause) {
