@@ -35,7 +35,7 @@ class RedAnt {
     this.checkEdges();
   }
 
-  // functions for changing direction
+  // methods for changing direction
   turnR() {
     this.dir++;
     if (this.dir > 3) {
@@ -49,7 +49,7 @@ class RedAnt {
     }
   }
 
-  // function to change position based on direction
+  // method to change position based on direction
   moveForward() {
     if (this.dir == 0) {
       this.y--;

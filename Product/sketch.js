@@ -72,7 +72,7 @@ function setup() {
   neighborSlider = createSlider(1, 9, 1, 4);
   neighborSlider.position(canvasX + 570, canvasY + 860);
 
-  // some setup in the reset funciton to avoid duplication
+  // some setup in the reset function to avoid duplication
   reset();
 }
 

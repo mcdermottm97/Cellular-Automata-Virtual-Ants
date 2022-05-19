@@ -21,7 +21,7 @@ class Ant {
     rect(this.x * grid.scale, this.y * grid.scale, grid.scale, grid.scale);
   }
 
-  // change direction based on neigbourhood, flip current cell, then move forward.
+  // change direction based on neighbourhood, flip current cell, then move forward.
   update() {
     if(this.checkNeighborhood()){
       this.turnL();
@@ -34,7 +34,7 @@ class Ant {
     this.checkEdges();
   }
 
-  // functions for changing direction
+  // methods for changing direction
   turnR() {
     this.dir++;
     if (this.dir > 3) {
@@ -48,7 +48,7 @@ class Ant {
     }
   }
   
-  // function to change position based on direction
+  // method to change position based on direction
   moveForward() {
     if (this.dir == 0) {
       this.y--;
